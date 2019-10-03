@@ -1,0 +1,5 @@
+mutation {
+  bunny1: createBunny(data: { name: "Qwerty", category: "Nain" }) {
+    id
+  }
+}

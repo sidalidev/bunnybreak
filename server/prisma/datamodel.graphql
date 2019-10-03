@@ -1,0 +1,5 @@
+type Bunny {
+  id: ID! @id
+  name: String!
+  category: String!
+}

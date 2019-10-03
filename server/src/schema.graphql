@@ -1,0 +1,15 @@
+type Query {
+  bunnies: [Bunny!]!
+  bunny(id: ID!): Bunny
+}
+
+type Mutation {
+  createBunny(name: String!, category: String!): Bunny
+  deleteBunny(id: ID!): Bunny
+}
+
+type Bunny {
+  id: ID!
+  name: String!
+  category: String!
+}
