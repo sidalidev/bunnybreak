@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ApolloClient, InMemoryCache, HttpLink, gql } from 'apollo-boost'
 import { ApolloProvider, useQuery } from '@apollo/react-hooks'
+import { Bunny } from './server/src/generated/prisma-client'
 
 const cache = new InMemoryCache()
 const link = new HttpLink({
@@ -22,7 +23,6 @@ const BUNNIES_QUERY = gql`
     }
   }
 `
-type BunnyType = { id: string; name: string }
 function App() {
   const { loading, error, data } = useQuery(BUNNIES_QUERY)
 
@@ -32,9 +32,9 @@ function App() {
       {error && <Text>🚨Error...</Text>}
       <View>
         {data &&
-          data.bunnies.map(({ id, name }: BunnyType) => {
-            return <Text key={id}>{name}</Text>
-          })}
+          data.bunnies.map(({ id, name }: Bunny) => (
+            <Text key={id}>{name}</Text>
+          ))}
       </View>
     </View>
   )
