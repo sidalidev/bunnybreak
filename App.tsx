@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { ApolloClient, InMemoryCache, HttpLink, gql } from 'apollo-boost'
 import { ApolloProvider, useQuery } from '@apollo/react-hooks'
+import { mapping, light } from '@eva-design/eva'
+import { ApplicationProvider, Layout, Text } from 'react-native-ui-kitten'
 import { Bunny } from './server/src/generated/prisma-client'
 
 const cache = new InMemoryCache()
@@ -27,29 +29,30 @@ function App() {
   const { loading, error, data } = useQuery(BUNNIES_QUERY)
 
   return (
-    <View style={styles.container}>
+    <Layout style={styles.container}>
       {loading && <Text>⏳Loading...</Text>}
       {error && <Text>🚨Error...</Text>}
-      <View>
+      <Layout>
         {data &&
           data.bunnies.map(({ id, name }: Bunny) => (
             <Text key={id}>{name}</Text>
           ))}
-      </View>
-    </View>
+      </Layout>
+    </Layout>
   )
 }
 export default function Root() {
   return (
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <ApplicationProvider mapping={mapping} theme={light}>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </ApplicationProvider>
   )
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
   }
